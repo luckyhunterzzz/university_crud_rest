@@ -51,7 +51,7 @@ class StudentServiceTest {
         verify(studentRepository, times(1)).getStudentById(studentId);
         verify(studentMapper, times(1)).studentToStudentDto(student);
     }
-    
+
 //    public StudentDto getStudentById(int id) {
 //        Student student = studentRepository.getStudentById(id);
 //        return studentMapper.studentToStudentDto(student);

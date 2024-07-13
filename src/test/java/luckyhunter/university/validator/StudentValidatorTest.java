@@ -33,7 +33,7 @@ class StudentValidatorTest {
         studentValidator.validateFirstName(null);
         List<String> errors = studentValidator.getErrors();
         assertEquals(1, errors.size());
-        assertEquals("First Name must contain only Cyrillic characters without spaces or special symbols.", errors.get(0));
+        assertEquals("First Name can not be NULL", errors.get(0));
     }
 
     @Test
@@ -66,7 +66,7 @@ class StudentValidatorTest {
         studentValidator.validatePhoneNumber(null);
         List<String> errors = studentValidator.getErrors();
         assertEquals(1, errors.size());
-        assertEquals("Phone Number must start with +7 and contain exactly 10 digits after that.", errors.get(0));
+        assertEquals("Phone Number can not be NULL", errors.get(0));
     }
 
     @ParameterizedTest
@@ -100,7 +100,7 @@ class StudentValidatorTest {
         studentValidator.validateLastName(null);
         List<String> errors = studentValidator.getErrors();
         assertEquals(1, errors.size());
-        assertEquals("Last Name must contain only Cyrillic characters without spaces or special symbols.", errors.get(0));
+        assertEquals("Last Name can not be NULL", errors.get(0));
     }
 
     @Test

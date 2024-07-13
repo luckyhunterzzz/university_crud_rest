@@ -80,6 +80,4 @@ public class StudentServlet extends HttpServlet {
             resp.getWriter().write("{\"error\": \"ID parameter is required\"}");
         }
     }
-
-
 }

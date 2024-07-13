@@ -20,6 +20,8 @@ public class StudentValidator {
     public void validateFirstName(String name) {
         if (name != null && NAME_PATTERN.matcher(name).matches()) {
             studentModDto.setFirstName(name);
+        } else if (name == null) {
+            errors.add("First Name can not be NULL");
         } else {
             errors.add("First Name must contain only Cyrillic characters without spaces or special symbols.");
         }
@@ -28,6 +30,8 @@ public class StudentValidator {
     public void validateLastName(String name) {
         if (name != null && NAME_PATTERN.matcher(name).matches()) {
             studentModDto.setLastName(name);
+        } else if (name == null) {
+            errors.add("Last Name can not be NULL");
         } else {
             errors.add("Last Name must contain only Cyrillic characters without spaces or special symbols.");
         }
@@ -54,6 +58,8 @@ public class StudentValidator {
     public void validatePhoneNumber(String number) {
         if (number != null && PHONE_PATTERN.matcher(number).matches()) {
             studentModDto.setPhoneNumber(number);
+        } else if (number == null) {
+            errors.add("Phone Number can not be NULL");
         } else {
             errors.add("Phone Number must start with +7 and contain exactly 10 digits after that.");
         }
