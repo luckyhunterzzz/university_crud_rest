@@ -13,9 +13,14 @@ public class GroupRepository {
     public Group getGroupWithStudentsById(int groupId) {
         Group group = null;
         List<Student> students = new ArrayList<>();
-        String groupQuery = "SELECT * FROM groups WHERE id = ?";
-        String studentQuery = "SELECT s.* FROM student_group sg " +
-                              "JOIN students s ON sg.student_id = s.id " +
+        String groupQuery = "SELECT * " +
+                            "FROM groups " +
+                            "WHERE id = ?";
+
+        String studentQuery = "SELECT s.* " +
+                              "FROM student_group sg " +
+                              "JOIN students s " +
+                              "ON sg.student_id = s.id " +
                               "WHERE sg.group_id = ?";
 
         try (Connection connection = ConnectionPool.getConnection();

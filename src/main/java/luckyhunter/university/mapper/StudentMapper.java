@@ -16,6 +16,4 @@ public interface StudentMapper {
     StudentModDto studentToStudentModDto(Student student);
 
     Student studentModDtoToStudent(StudentModDto studentModDto);
-
-
 }

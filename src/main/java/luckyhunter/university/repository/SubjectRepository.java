@@ -15,13 +15,17 @@ public class SubjectRepository {
     public List<Subject> getAllSubjects() {
         String query = "SELECT * FROM subjects";
         List<Subject> subjects = new ArrayList<>();
+
         try (Connection connection = ConnectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
+
             while (resultSet.next()) {
-                subjects.add(new Subject(resultSet.getInt("id"),
+                subjects.add(new Subject(
+                        resultSet.getInt("id"),
                         resultSet.getString("subject_name")));
             }
+
         } catch (SQLException e) {
             System.out.println("Got SQLException " + e.getMessage());
         }

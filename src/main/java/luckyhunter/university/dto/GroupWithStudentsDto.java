@@ -15,6 +15,7 @@ public class GroupWithStudentsDto {
     private String name;
     private List<StudentDto> students;
 
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, JSON_STYLE)

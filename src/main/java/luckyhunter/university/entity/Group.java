@@ -17,6 +17,11 @@ public class Group {
     private String name;
     private List<Student> students;
 
+    public Group(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, JSON_STYLE)
