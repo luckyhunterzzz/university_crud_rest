@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import luckyhunter.university.dto.StudentDto;
 import luckyhunter.university.service.StudentService;
 import luckyhunter.university.validator.StudentValidator;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @WebServlet("/students")
 public class StudentServlet extends HttpServlet {
     private final StudentService studentService = new StudentService();
@@ -33,11 +35,14 @@ public class StudentServlet extends HttpServlet {
             int id = Integer.parseInt(idParam);
             StudentDto student = studentService.getStudentById(id);
             writer.write(student.toString());
+            log.error("Students GET all students");
         } else if (firstNameParam != null) {
+            log.error("Students GET all students");
             List<StudentDto> students = studentService.getStudentsByFirstName(firstNameParam);
             writer.write(students.toString());
         } else {
             List<StudentDto> students = studentService.getAllStudents();
+            log.error("Students GET all students");
             writer.write(students.toString());
         }
     }
