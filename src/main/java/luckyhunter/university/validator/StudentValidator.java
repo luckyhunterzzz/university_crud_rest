@@ -1,5 +1,6 @@
 package luckyhunter.university.validator;
 
+import lombok.extern.slf4j.Slf4j;
 import luckyhunter.university.dto.StudentModDto;
 
 import java.time.LocalDate;
@@ -9,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Класс `StudentValidator` выполняет валидацию данных студента и преобразование
+ * входных данных в объект `StudentModDto`.
+ */
+@Slf4j
 public class StudentValidator {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[А-ЯЁа-яё]+$");
     private static final Pattern PHONE_PATTERN = Pattern.compile("^\\+7\\d{10}$");
@@ -17,6 +23,11 @@ public class StudentValidator {
     private List<String> errors = new ArrayList<>();
     private StudentModDto studentModDto = new StudentModDto();
 
+    /**
+     * Выполняет валидацию имени студента.
+     *
+     * @param name Имя студента для валидации
+     */
     public void validateFirstName(String name) {
         if (name != null && NAME_PATTERN.matcher(name).matches()) {
             studentModDto.setFirstName(name);
@@ -27,6 +38,12 @@ public class StudentValidator {
         }
     }
 
+
+    /**
+     * Выполняет валидацию фамилии студента.
+     *
+     * @param name Фамилия студента для валидации
+     */
     public void validateLastName(String name) {
         if (name != null && NAME_PATTERN.matcher(name).matches()) {
             studentModDto.setLastName(name);
@@ -37,6 +54,11 @@ public class StudentValidator {
         }
     }
 
+    /**
+     * Выполняет валидацию даты рождения студента.
+     *
+     * @param date Строка с датой рождения в формате "yyyy-MM-dd"
+     */
     public void validateBirthDate(String date) {
         LocalDate parsedDate = null;
         if (date == null) {
@@ -51,10 +73,16 @@ public class StudentValidator {
                 }
             } catch (DateTimeParseException e) {
                 errors.add("Birth Date must be in the format yyyy-MM-dd.");
+                log.error("Got DateTimeParseException " + e.getMessage());
             }
         }
     }
 
+    /**
+     * Выполняет валидацию номера телефона студента.
+     *
+     * @param number Номер телефона для валидации
+     */
     public void validatePhoneNumber(String number) {
         if (number != null && PHONE_PATTERN.matcher(number).matches()) {
             studentModDto.setPhoneNumber(number);
@@ -65,14 +93,29 @@ public class StudentValidator {
         }
     }
 
+    /**
+     * Возвращает список ошибок валидации.
+     *
+     * @return Список ошибок валидации
+     */
     public List<String> getErrors() {
         return errors;
     }
 
+    /**
+     * Возвращает объект `StudentModDto`, содержащий валидные данные студента.
+     *
+     * @return Объект `StudentModDto` с валидными данными студента
+     */
     public StudentModDto getStudentModDto() {
         return studentModDto;
     }
 
+    /**
+     * Представляет объект `StudentValidator` в виде строки, содержащей все ошибки валидации.
+     *
+     * @return Строка с ошибками валидации
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

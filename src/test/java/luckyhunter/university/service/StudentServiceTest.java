@@ -1,9 +1,12 @@
 package luckyhunter.university.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import luckyhunter.university.dto.StudentDto;
+import luckyhunter.university.dto.StudentModDto;
 import luckyhunter.university.entity.Student;
 import luckyhunter.university.mapper.StudentMapper;
 import luckyhunter.university.repository.StudentRepository;
+import luckyhunter.university.validator.StudentValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,14 +24,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
     @Mock
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
+
     @Mock
-    StudentMapper studentMapper;
+    private StudentMapper studentMapper;
+
     @InjectMocks
-    StudentService studentService;
+    private StudentService studentService;
 
     @BeforeEach
     public void setUp() {
@@ -36,41 +40,45 @@ class StudentServiceTest {
     }
 
     @Test
-    void getStudentById() {
-        int studentId = 1;
-        Student student = new Student(studentId, "Алина", "Могунова", LocalDate.of(2007, 1, 31), "+79876541230");
-        StudentDto expectedStudentDto = new StudentDto("Алина", "Могунова", LocalDate.of(2007, 1, 31));
+    public void testGetAllStudents() {
+        Student student = mock(Student.class);
+        when(studentRepository.getAllStudents()).thenReturn(Collections.singletonList(student));
+        when(studentMapper.studentToStudentDto(student)).thenReturn(new StudentDto());
 
+        List<StudentDto> result = studentService.getAllStudents();
 
-        when(studentRepository.getStudentById(studentId)).thenReturn(student);
-        when(studentMapper.studentToStudentDto(student)).thenReturn(expectedStudentDto);
-
-        StudentDto actualStudentDto = studentService.getStudentById(studentId);
-
-        assertEquals(expectedStudentDto, actualStudentDto);
-
-        verify(studentRepository, times(1)).getStudentById(studentId);
-        verify(studentMapper, times(1)).studentToStudentDto(student);
+        verify(studentRepository).getAllStudents();
+        assertEquals(1, result.size());
     }
 
     @Test
-    void getAllStudents() {
+    public void testGetStudentById() {
+        Student student = mock(Student.class);
+        when(studentRepository.getStudentById(1)).thenReturn(student);
+        when(studentMapper.studentToStudentDto(student)).thenReturn(new StudentDto());
 
+        StudentDto result = studentService.getStudentById(1);
+
+        verify(studentRepository).getStudentById(1);
+        assertEquals(new StudentDto(), result);
     }
 
     @Test
-    void getStudentsByFirstName() {
+    public void testGetStudentsByFirstName() {
+        Student student = mock(Student.class);
+        when(studentRepository.getStudentsByFirstName("Екатерина")).thenReturn(Collections.singletonList(student));
+        when(studentMapper.studentToStudentDto(student)).thenReturn(new StudentDto());
+
+        List<StudentDto> result = studentService.getStudentsByFirstName("Екатерина");
+
+        verify(studentRepository).getStudentsByFirstName("Екатерина");
+        assertEquals(1, result.size());
     }
 
     @Test
-    void addStudent() {
-    }
+    public void testDeleteStudentById() {
+        studentService.deleteStudentById(1);
 
-    @Test
-    void deleteStudentById() {
-    }
-
-    @Test
-    void parseJson() {
+        verify(studentRepository).deleteStudentById(1);
     }
 }

@@ -6,6 +6,9 @@ import luckyhunter.university.entity.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+/**
+ * Маппер для преобразования объектов типа Student в StudentDto и обратно, а также для StudentModDto.
+ */
 @Mapper
 public interface StudentMapper {
 

@@ -14,16 +14,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * Сервлет для обработки запросов, связанных с группами студентов.
+ */
 @WebServlet("/groups")
 public class GroupServlet extends HttpServlet {
     private GroupService groupService;
 
+    /**
+     * Инициализация сервлета. Получает экземпляр GroupService из контекста сервлетов.
+     *
+     * @throws ServletException Исключение, возникающее при ошибках инициализации сервлета
+     */
     @Override
     public void init() throws ServletException {
         ServletContext ctx = getServletContext();
         this.groupService = (GroupService) ctx.getAttribute("groupService");
     }
 
+    /**
+     * Обрабатывает GET запросы для получения информации о группах или конкретной группе по идентификатору.
+     *
+     * @param req  HTTP запрос
+     * @param resp HTTP ответ
+     * @throws ServletException Исключение, возникающее при ошибках сервлета
+     * @throws IOException      Исключение, возникающее при ошибках ввода/вывода
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idParam = req.getParameter("id");

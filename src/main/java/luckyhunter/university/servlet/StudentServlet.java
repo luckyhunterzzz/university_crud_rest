@@ -16,16 +16,33 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Сервлет для обработки запросов, связанных со студентами.
+ */
+@Slf4j
 @WebServlet("/students")
 public class StudentServlet extends HttpServlet {
     private StudentService studentService;
 
+    /**
+     * Инициализация сервлета. Получает экземпляр StudentService из контекста сервлетов.
+     *
+     * @throws ServletException Исключение, возникающее при ошибках инициализации сервлета
+     */
     @Override
     public void init() throws ServletException {
         ServletContext ctx = getServletContext();
         this.studentService = (StudentService) ctx.getAttribute("studentService");
     }
 
+    /**
+     * Обрабатывает GET запросы для получения информации о студентах или конкретном студенте по идентификатору или имени.
+     *
+     * @param req  HTTP запрос
+     * @param resp HTTP ответ
+     * @throws ServletException Исключение, возникающее при ошибках сервлета
+     * @throws IOException      Исключение, возникающее при ошибках ввода/вывода
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idParam = req.getParameter("id");
@@ -49,6 +66,14 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает POST запросы для добавления нового студента на основе переданных данных JSON.
+     *
+     * @param req  HTTP запрос
+     * @param resp HTTP ответ
+     * @throws ServletException Исключение, возникающее при ошибках сервлета
+     * @throws IOException      Исключение, возникающее при ошибках ввода/вывода
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -66,6 +91,7 @@ public class StudentServlet extends HttpServlet {
             } catch (IllegalArgumentException e) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().write("{\"error\":\"" + e.getMessage() + "\"}");
+                log.error("Got IllegalArgumentException "+ e.getMessage());
             }
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -73,15 +99,29 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Обрабатывает DELETE запросы для удаления студента по указанному идентификатору.
+     *
+     * @param req  HTTP запрос
+     * @param resp HTTP ответ
+     * @throws ServletException Исключение, возникающее при ошибках сервлета
+     * @throws IOException      Исключение, возникающее при ошибках ввода/вывода
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String idParam = req.getParameter("id");
 
         if (idParam != null) {
-            int id = Integer.parseInt(idParam);
-            studentService.deleteStudentById(id);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-            resp.getWriter().write("{\"message\":\"Student deleted successfully\"}");
+            try {
+                int id = Integer.parseInt(idParam);
+                studentService.deleteStudentById(id);
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.getWriter().write("{\"message\":\"Student deleted successfully\"}");
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resp.getWriter().write("{\"error\": \"Invalid ID parameter\"}");
+                log.error("Got NumberFormatException "+ e.getMessage());
+            }
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             resp.getWriter().write("{\"error\": \"ID parameter is required\"}");

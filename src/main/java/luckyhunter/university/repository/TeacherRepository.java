@@ -1,5 +1,6 @@
 package luckyhunter.university.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import luckyhunter.university.entity.Subject;
 import luckyhunter.university.entity.Teacher;
 import luckyhunter.university.util.ConnectionPool;
@@ -10,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * Репозиторий для работы с преподавателями в базе данных.
+ */
+@Slf4j
 public class TeacherRepository {
 
     public static final String QUERY_BY_ID = "SELECT t.id, t.teacher_first_name, t.teacher_last_name, t.stage, ts.subject_id, s.subject_name " +
@@ -22,6 +27,12 @@ public class TeacherRepository {
             "LEFT JOIN teacher_subjects ts ON t.id = ts.teacher_id " +
             "LEFT JOIN subjects s ON ts.subject_id = s.id";
 
+    /**
+     * Возвращает объект преподавателя по указанному идентификатору вместе с перечислением предметов, которые он ведет.
+     *
+     * @param id Идентификатор преподавателя
+     * @return Объект преподавателя с заполненным списком предметов
+     */
     public Teacher getTeacherById(int id) {
 
         Teacher teacher = null;
@@ -49,11 +60,17 @@ public class TeacherRepository {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Got SQLException " + e.getMessage());
+            log.error("Got SQLException " + e.getMessage());
         }
         return teacher;
     }
 
+    /**
+     * Возвращает список всех преподавателей из базы данных вместе с перечислением предметов,
+     * которые они ведут.
+     *
+     * @return Список объектов преподавателей с заполненными списками предметов
+     */
     public List<Teacher> getAllTeachers() {
 
         List<Teacher> teachers = new ArrayList<>();
@@ -93,7 +110,7 @@ public class TeacherRepository {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Got SQLException " + e.getMessage());
+            log.error("Got SQLException " + e.getMessage());
         }
 
         return teachers;

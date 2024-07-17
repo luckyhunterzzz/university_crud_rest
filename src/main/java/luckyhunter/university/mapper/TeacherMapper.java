@@ -12,6 +12,9 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Маппер для преобразования объектов типа Teacher в TeacherDto и обратно, а также для TeacherModDto.
+ */
 @Mapper
 public interface TeacherMapper {
     TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
