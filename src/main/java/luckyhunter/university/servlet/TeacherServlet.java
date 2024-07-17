@@ -1,12 +1,14 @@
 package luckyhunter.university.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import luckyhunter.university.dto.TeacherDto;
+import luckyhunter.university.service.SubjectService;
 import luckyhunter.university.service.TeacherService;
 
 import java.io.IOException;
@@ -15,7 +17,13 @@ import java.util.List;
 
 @WebServlet("/teachers")
 public class TeacherServlet extends HttpServlet {
-    private final TeacherService teacherService = new TeacherService();
+    private TeacherService teacherService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext ctx = getServletContext();
+        this.teacherService = (TeacherService) ctx.getAttribute("teacherService");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

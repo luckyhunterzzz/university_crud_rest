@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,11 +52,6 @@ class StudentServiceTest {
         verify(studentRepository, times(1)).getStudentById(studentId);
         verify(studentMapper, times(1)).studentToStudentDto(student);
     }
-
-//    public StudentDto getStudentById(int id) {
-//        Student student = studentRepository.getStudentById(id);
-//        return studentMapper.studentToStudentDto(student);
-//    }
 
     @Test
     void getAllStudents() {

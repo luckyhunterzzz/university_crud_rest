@@ -15,8 +15,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StudentService {
-    private final StudentRepository studentRepository = new StudentRepository();
-    private final StudentMapper studentMapper = StudentMapper.INSTANCE;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
+
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
+    }
 
     public List<StudentDto> getAllStudents() {
         return studentRepository.getAllStudents().stream()

@@ -33,7 +33,3 @@ public class LoggingFilter implements Filter {
     public void destroy() {
     }
 }
-
-//        log.debug("Request received: {} {}", request.getRemoteAddr(), request.getRemotePort());
-//        chain.doFilter(request, response);
-//        log.debug("Response sent to: {} {}", request.getRemoteAddr(), request.getRemotePort());

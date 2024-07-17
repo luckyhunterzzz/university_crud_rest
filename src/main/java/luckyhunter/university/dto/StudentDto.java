@@ -2,6 +2,7 @@ package luckyhunter.university.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class StudentDto {
     private String firstName;
     private String lastName;

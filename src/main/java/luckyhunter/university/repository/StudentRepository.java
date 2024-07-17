@@ -11,13 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepository {
+
+    public static final String QUERY_GET_ALL = "SELECT * FROM students";
+    public static final String QUERY_GET_BY_ID = "SELECT * FROM students WHERE id = ?";
+    public static final String QUERY_GET_BY_FIRSTNAME = "SELECT * FROM students WHERE first_name = ?";
+    public static final String QUERY_ADD = "INSERT INTO students (first_name, last_name, birth_date, phone_number) VALUES (?, ?, ?, ?)";
+    public static final String QUERY_DELETE = "DELETE FROM students WHERE id = ?";
+
     public List<Student> getAllStudents() {
         List<Student> students = new ArrayList<>();
 
-        String query = "SELECT * FROM students";
-
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
+             PreparedStatement statement = connection.prepareStatement(QUERY_GET_ALL);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 students.add(mapResultSetToStudent(resultSet));
@@ -30,10 +35,9 @@ public class StudentRepository {
 
     public Student getStudentById(int id) {
         Student student = null;
-        String query = "SELECT * FROM students WHERE id = ?";
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(QUERY_GET_BY_ID)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -47,10 +51,9 @@ public class StudentRepository {
 
     public List<Student> getStudentsByFirstName(String firstName) {
         List<Student> students = new ArrayList<>();
-        String query = "SELECT * FROM students WHERE first_name = ?";
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(QUERY_GET_BY_FIRSTNAME)) {
             statement.setString(1, firstName);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -63,9 +66,8 @@ public class StudentRepository {
     }
 
     public void addStudent(Student student) {
-        String query = "INSERT INTO students (first_name, last_name, birth_date, phone_number) VALUES (?, ?, ?, ?)";
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(QUERY_ADD)) {
             statement.setString(1, student.getFirstName());
             statement.setString(2, student.getLastName());
             statement.setDate(3, java.sql.Date.valueOf(student.getBirthDate()));
@@ -78,10 +80,9 @@ public class StudentRepository {
     }
 
     public void deleteStudentById(int id) {
-        String query = "DELETE FROM students WHERE id = ?";
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(QUERY_DELETE)) {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {

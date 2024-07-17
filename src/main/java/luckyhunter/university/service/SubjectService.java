@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SubjectService {
-    private final SubjectRepository subjectRepository = new SubjectRepository();
-    private final SubjectMapper subjectMapper = SubjectMapper.INSTANCE;
+    private SubjectRepository subjectRepository;
+    private SubjectMapper subjectMapper;
+
+    public SubjectService(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+        this.subjectRepository = subjectRepository;
+        this.subjectMapper = subjectMapper;
+    }
 
     public List<SubjectDto> getAllSubjects() {
         return subjectRepository.getAllSubjects().stream()

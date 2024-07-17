@@ -11,17 +11,23 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class TeacherRepository {
+
+    public static final String QUERY_BY_ID = "SELECT t.id, t.teacher_first_name, t.teacher_last_name, t.stage, ts.subject_id, s.subject_name " +
+            "FROM teachers t " +
+            "LEFT JOIN teacher_subjects ts ON t.id = ts.teacher_id " +
+            "LEFT JOIN subjects s ON ts.subject_id = s.id " +
+            "WHERE t.id = ?";
+    public static final String QUERY_ALL_TEACHERS = "SELECT t.id, t.teacher_first_name, t.teacher_last_name, t.stage, ts.subject_id, s.subject_name " +
+            "FROM teachers t " +
+            "LEFT JOIN teacher_subjects ts ON t.id = ts.teacher_id " +
+            "LEFT JOIN subjects s ON ts.subject_id = s.id";
+
     public Teacher getTeacherById(int id) {
-        String query = "SELECT t.id, t.teacher_first_name, t.teacher_last_name, t.stage, ts.subject_id, s.subject_name " +
-                "FROM teachers t " +
-                "LEFT JOIN teacher_subjects ts ON t.id = ts.teacher_id " +
-                "LEFT JOIN subjects s ON ts.subject_id = s.id " +
-                "WHERE t.id = ?";
 
         Teacher teacher = null;
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(QUERY_BY_ID)) {
 
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -49,15 +55,11 @@ public class TeacherRepository {
     }
 
     public List<Teacher> getAllTeachers() {
-        String query = "SELECT t.id, t.teacher_first_name, t.teacher_last_name, t.stage, ts.subject_id, s.subject_name " +
-                "FROM teachers t " +
-                "LEFT JOIN teacher_subjects ts ON t.id = ts.teacher_id " +
-                "LEFT JOIN subjects s ON ts.subject_id = s.id";
 
         List<Teacher> teachers = new ArrayList<>();
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
+             PreparedStatement statement = connection.prepareStatement(QUERY_ALL_TEACHERS);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {

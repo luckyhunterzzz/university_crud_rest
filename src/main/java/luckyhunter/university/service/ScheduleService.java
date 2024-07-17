@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ScheduleService {
-    private final ScheduleRepository scheduleRepository = new ScheduleRepository();
-    private final ScheduleMapper scheduleMapper = ScheduleMapper.INSTANCE;
+    private ScheduleRepository scheduleRepository;
+    private ScheduleMapper scheduleMapper;
+
+    public ScheduleService(ScheduleRepository scheduleRepository, ScheduleMapper scheduleMapper) {
+        this.scheduleRepository = scheduleRepository;
+        this.scheduleMapper = scheduleMapper;
+    }
 
     public List<ScheduleDto> getAllSchedules() {
         return scheduleRepository.getAllSchedules().stream()

@@ -10,22 +10,22 @@ import java.util.List;
 
 public class GroupRepository {
 
+    public static final String GROUP_QUERY = "SELECT * " +
+                        "FROM groups " +
+                        "WHERE id = ?";
+    public static final String STUDENT_QUERY = "SELECT s.* " +
+                          "FROM student_group sg " +
+                          "JOIN students s " +
+                          "ON sg.student_id = s.id " +
+                          "WHERE sg.group_id = ?";
+
     public Group getGroupWithStudentsById(int groupId) {
         Group group = null;
         List<Student> students = new ArrayList<>();
-        String groupQuery = "SELECT * " +
-                            "FROM groups " +
-                            "WHERE id = ?";
-
-        String studentQuery = "SELECT s.* " +
-                              "FROM student_group sg " +
-                              "JOIN students s " +
-                              "ON sg.student_id = s.id " +
-                              "WHERE sg.group_id = ?";
 
         try (Connection connection = ConnectionPool.getConnection();
-             PreparedStatement groupStatement = connection.prepareStatement(groupQuery);
-             PreparedStatement studentStatement = connection.prepareStatement(studentQuery)) {
+             PreparedStatement groupStatement = connection.prepareStatement(GROUP_QUERY);
+             PreparedStatement studentStatement = connection.prepareStatement(STUDENT_QUERY)) {
 
             groupStatement.setInt(1, groupId);
             ResultSet groupResultSet = groupStatement.executeQuery();

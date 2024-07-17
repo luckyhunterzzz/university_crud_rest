@@ -9,8 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TeacherService {
-    private final TeacherRepository teacherRepository = new TeacherRepository();
-    private final TeacherMapper teacherMapper = TeacherMapper.INSTANCE;
+    private TeacherRepository teacherRepository;
+    private TeacherMapper teacherMapper;
+
+    public TeacherService(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+        this.teacherRepository = teacherRepository;
+        this.teacherMapper = teacherMapper;
+    }
 
     public TeacherDto getTeacherById(int id) {
         Teacher teacher = teacherRepository.getTeacherById(id);

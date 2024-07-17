@@ -1,5 +1,6 @@
 package luckyhunter.university.servlet;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +16,13 @@ import java.util.List;
 
 @WebServlet("/groups")
 public class GroupServlet extends HttpServlet {
-    private final GroupService groupService = new GroupService();
+    private GroupService groupService;
+
+    @Override
+    public void init() throws ServletException {
+        ServletContext ctx = getServletContext();
+        this.groupService = (GroupService) ctx.getAttribute("groupService");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

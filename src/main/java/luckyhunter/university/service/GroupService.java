@@ -12,9 +12,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GroupService {
-    private final GroupRepository groupRepository = new GroupRepository();
-    private final GroupMapper groupMapper = GroupMapper.INSTANCE;
-    private final StudentMapper studentMapper = StudentMapper.INSTANCE;
+    private final GroupRepository groupRepository;
+    private final GroupMapper groupMapper;
+    private final StudentMapper studentMapper;
+
+    public GroupService(GroupRepository groupRepository, GroupMapper groupMapper, StudentMapper studentMapper) {
+        this.groupRepository = groupRepository;
+        this.groupMapper = groupMapper;
+        this.studentMapper = studentMapper;
+    }
 
     public GroupWithStudentsDto getGroupWithStudentsById(int id) {
         Group group = groupRepository.getGroupWithStudentsById(id);

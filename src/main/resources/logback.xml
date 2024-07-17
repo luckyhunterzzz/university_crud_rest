@@ -1,53 +1,34 @@
 <configuration>
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/universityCrud.log</file>
 
-        <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>logs/university_crud.log</file>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>logs/university_crud.%d{yyyy-MM-dd}.log</fileNamePattern>
-                <maxHistory>7</maxHistory>
-            </rollingPolicy>
-            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                <maxFileSize>1MB</maxFileSize>
-            </triggeringPolicy>
-            <encoder>
-                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}: %msg%n</pattern>
-            </encoder>
-        </appender>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/universityCrud.%d{yyyy-MM-dd}.log</fileNamePattern>
 
-        <root level="debug">
-            <appender-ref ref="ROLLING" />
-        </root>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
 
-<!--        <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-<!--            <file>logs/university_crud.log</file>-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1MB</maxFileSize>
+        </triggeringPolicy>
 
-<!--            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-<!--                <fileNamePattern>logs/university_crud.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}: %msg%n</pattern>
+        </encoder>
+    </appender>
 
-<!--                <maxHistory>7</maxHistory>-->
-<!--            </rollingPolicy>-->
+    <root level="debug">
+        <appender-ref ref="ROLLING"/>
+    </root>
 
-<!--            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-<!--                <maxFileSize>1MB</maxFileSize>-->
-<!--            </triggeringPolicy>-->
+    <!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+    <!--        <encoder>-->
+    <!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
 
-<!--            <encoder>-->
-<!--                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36}: %msg%n</pattern>-->
-<!--            </encoder>-->
-<!--        </appender>-->
+    <!--    <root level="debug">-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--    </root>-->
 
-<!--        <root level="debug">-->
-<!--            <appender-ref ref="ROLLING" />-->
-<!--        </root>-->
-    <!--
- <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-     <encoder>
-         <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-     </encoder>
- </appender>
-
- <root level="debug">
-     <appender-ref ref="CONSOLE" />
- </root>
--->
-    </configuration>
+</configuration>
