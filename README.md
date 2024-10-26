@@ -19,8 +19,8 @@ Java JDK 11+
 
 2. **Установка**
 Клонируйте репозиторий:
-git clone https://github.com/luckyhunterzzz/university_crud_rest.git
-cd university_crud_rest
+- git clone https://github.com/luckyhunterzzz/university_crud_rest.git
+- cd university_crud_rest
 
 3. **Запустите базу данных PostgreSQL:**
 docker-compose up -d
